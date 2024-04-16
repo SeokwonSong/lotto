@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로또 번호 추첨기</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <style>
+        .ball {
+            float: left;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 20px;
+            border-radius: 100%;
+            text-align: center;
+            vertical-align: middle;
+            color: #fff;
+            font-weight: 500;
+            text-shadow: 0px 0px 3px rgba(73, 57, 0, .8);
+            margin-right: 6px;
+        }
+
+        .ball1 {
+            background: #fbc400;
+        }
+
+        .ball2 {
+            background: #69c8f2;
+        }
+
+        .ball3 {
+            background: #ff7272;
+        }
+
+        .ball4 {
+            background: #aaa;
+        }
+
+        .ball5 {
+            background: #b0d840;
+        }
+
+        .ball6 {
+            background: #c7c7c7;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <script>
+        $(document).ready(function () {
+            var getBallClass = function (lotto) {
+                var result = "ball1";
+                if (lotto < 10) {
+                    result = "ball1";
+                } else if (lotto >= 10 && lotto < 20) {
+                    result = "ball2";
+                } else if (lotto >= 20 && lotto < 30) {
+                    result = "ball3";
+                } else if (lotto >= 30 && lotto < 40) {
+                    result = "ball4";
+                } else if (lotto >= 40 && lotto < 46) {
+                    result = "ball5";
+                }
+                return result;
+            }
+
+            var lottoCrate = function () {
+                var i = 0;
+                $("#content").empty();
+                while (i < 5) {
+                    var lotto = [];
+                    while (lotto.length < 6) {
+                        var num = parseInt(Math.random() * 45 + 1);
+                        if (lotto.indexOf(num) == -1) {
+                            lotto.push(num);
+                        }
+                    }
+                    lotto.sort((a, b) => a - b);
+
+                    $("#content").append("<div class='callout callout-danger' style='height: 110px;'><h5>" + (i + 1) + "번! </h5>"
+                        + "<p>"
+                        + "<div class='ball " + getBallClass(lotto[0]) + "'>" + lotto[0] + "</div>"
+                        + "<div class='ball " + getBallClass(lotto[1]) + "'>" + lotto[1] + "</div>"
+                        + "<div class='ball " + getBallClass(lotto[2]) + "'>" + lotto[2] + "</div>"
+                        + "<div class='ball " + getBallClass(lotto[3]) + "'>" + lotto[3] + "</div>"
+                        + "<div class='ball " + getBallClass(lotto[4]) + "'>" + lotto[4] + "</div>"
+                        + "<div class='ball " + getBallClass(lotto[5]) + "'>" + lotto[5] + "</div>"
+                        + "</p>"
+                    );
+                    i++;
+                }
+            }
+
+            $("#btn_lotto").on("click", function () {
+                lottoCrate();
+            })
+
+
+        });
+
+    </script>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">로또 번호 가자!!</h3>
+                </div>
+                <div class="card-body" id="content">
+                    생성 눌러라
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="btn_lotto" class="btn btn-block btn-success btn-lg">생성</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
